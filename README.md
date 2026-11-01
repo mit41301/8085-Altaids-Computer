@@ -1,5 +1,5 @@
 # Intel 80C85 Altaids Computer
-
+<img width="720" height="534" alt="_1976_8085_5x7_200dpi" src="https://github.com/user-attachments/assets/78c363f6-54df-400b-8b79-4c3a9c07e5a4" />
 Intel released the 8085 Microprocessor in March 1976. So by now it is more than 50 years. Like TIME MACHINE can be go back and build a 8085 computer? Even after fifty years we can still build a simple computer based on 8085. The study material available for 8085 is huge. We can find so many text books for 8085 with different level of approch. There are so many tutorial videos available in YouTube. Intel licensed the 8085 design to second source. So AMD, NEC, TOSHIBA, OKI, Siemens, etc., manufactured 8085. It is also available with CMOS technology which consumes very less power.
 
 8085 was over shadowed by Z80 and other eight bit microprocessors. But it found a place in College and University. That may be one of the reason it lasted for long time. Since it is a microprocessor and not a microcontroller, it is very simple in hardware and very easy to understand.  
