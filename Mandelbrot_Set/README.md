@@ -14,9 +14,7 @@ I am able to plot on a 8085 machine running at 4.9152 MHz with 2400 baud using t
 
 I was looking for other ways to speed up my machine to perform faster. So I was looking simple or native machine language based approach.
 
-There is a Hackaday user [**senily64dx**](https://hackaday.io/SenileDataSystems)
-
-who recently built a 8080 kit. The surprise part is the kit was originally built on the year **1976** and was never opened till **2026**. Below is the assembled 8080 kit picture for reference.
+There is a Hackaday user [**senily64dx**](https://hackaday.io/SenileDataSystems) who recently built a 8080 kit. The surprise part is the kit was originally built on the year **1976** and was never opened till **2026**. Below is the assembled 8080 kit picture for reference.
 
 <img width="3052" height="1700" alt="8080_SIEMENS" src="https://github.com/user-attachments/assets/18787cb0-44f3-41cd-8520-177133b6e79d" />
 
