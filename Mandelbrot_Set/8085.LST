@@ -1,0 +1,1028 @@
+                        ; Mandelbrot generator (C) ChatGPT
+2000                            ORG     0x2000
+
+      = 1006            CO      EQU     0X1006
+
+                        ; ============================================================
+                        ; Mandelbrot for Intel 8085 / MCS-85 KIT
+                        ;
+                        ; Display: 79 x 23 characters
+                        ;
+                        ; Fixed point:
+                        ;       128 = 1.0
+                        ;
+                        ; Program: 1000H onwards
+                        ; Stack:   1300H-13FFH -- NEVER TOUCHED BY PROGRAM DATA
+                        ; Work:    3000H-33FFH
+                        ;
+                        ; Exit: RET
+                        ; ============================================================
+
+
+                        ; ------------------------------------------------------------
+                        ; Parameter block (this is for easier user access so you can just change those with the ML monitor)
+                        ; so the machine doesn't have to render the same image again and again at retrocomputing events
+                        ; ------------------------------------------------------------
+
+      = 3000            CENTER_X    EQU     0x3000
+      = 3002            CENTER_Y    EQU     0x3002
+      = 3004            STEP_X      EQU     0x3004
+      = 3006            STEP_Y      EQU     0x3006
+      = 3008            ITER_MAX    EQU     0x3008
+
+
+                        ; ------------------------------------------------------------
+                        ; Working storage
+                        ; ------------------------------------------------------------
+
+      = 3009            TOP_Y       EQU     0x3009
+      = 300B            CUR_X       EQU     0x300B
+      = 300D            CUR_Y       EQU     0x300D
+
+      = 300F            Z_X         EQU     0x300F
+      = 3011            Z_Y         EQU     0x3011
+
+      = 3013            OLD_X       EQU     0x3013
+      = 3015            OLD_Y       EQU     0x3015
+
+      = 3017            X2          EQU     0x3017
+      = 3019            Y2          EQU     0x3019
+
+      = 301B            ITER        EQU     0x301B
+      = 301C            COLS        EQU     0x301C
+      = 301D            ROWS        EQU     0x301D
+
+      = 301E            SIGN        EQU     0x301E
+      = 301F            MUL_A       EQU     0x301F
+      = 3021            MUL_B       EQU     0x3021
+
+
+                        ; ============================================================
+                        ; PROGRAM
+                        ; ============================================================
+
+2000                    START:
+
+                        ; ------------------------------------------------------------
+                        ; Calculate TOP_Y = CENTER_Y - 11 * STEP_Y
+                        ; ------------------------------------------------------------
+
+2000  2A 0230                   LHLD    CENTER_Y
+2003  22 0930                   SHLD    TOP_Y
+
+2006  06 0B                     MVI     B,11
+
+2008                    TOP_Y_LOOP:
+2008  2A 0930                   LHLD    TOP_Y
+200B  EB                        XCHG
+200C  2A 0630                   LHLD    STEP_Y
+
+200F  7B                        MOV     A,E
+2010  95                        SUB     L
+2011  5F                        MOV     E,A
+
+2012  7A                        MOV     A,D
+2013  9C                        SBB     H
+2014  57                        MOV     D,A
+
+2015  EB                        XCHG
+2016  22 0930                   SHLD    TOP_Y
+
+2019  05                        DCR     B
+201A  C2 0820                   JNZ     TOP_Y_LOOP
+
+
+                        ; ------------------------------------------------------------
+                        ; Start at top row
+                        ; ------------------------------------------------------------
+
+201D  2A 0930                   LHLD    TOP_Y
+2020  22 0D30                   SHLD    CUR_Y
+
+2023  3E 17                     MVI     A,23
+2025  32 1D30                   STA     ROWS
+
+
+                        ; ============================================================
+                        ; ROW LOOP
+                        ; ============================================================
+
+2028                    ROW_LOOP:
+
+                        ; ------------------------------------------------------------
+                        ; CUR_X = CENTER_X - 40 * STEP_X
+                        ; ------------------------------------------------------------
+
+2028  2A 0030                   LHLD    CENTER_X
+202B  22 0B30                   SHLD    CUR_X
+
+202E  06 28                     MVI     B,40
+
+2030                    X_START_LOOP:
+2030  2A 0B30                   LHLD    CUR_X
+2033  EB                        XCHG
+2034  2A 0430                   LHLD    STEP_X
+
+2037  7B                        MOV     A,E
+2038  95                        SUB     L
+2039  5F                        MOV     E,A
+
+203A  7A                        MOV     A,D
+203B  9C                        SBB     H
+203C  57                        MOV     D,A
+
+203D  EB                        XCHG
+203E  22 0B30                   SHLD    CUR_X
+
+2041  05                        DCR     B
+2042  C2 3020                   JNZ     X_START_LOOP
+
+
+                        ; ------------------------------------------------------------
+                        ; 79 columns
+                        ; ------------------------------------------------------------
+
+2045  3E 4F                     MVI     A,79
+2047  32 1C30                   STA     COLS
+
+
+204A                    COLUMN_LOOP:
+
+204A  CD 9B20                   CALL    MANDEL_POINT
+
+                        ; ------------------------------------------------------------
+                        ; Map iteration count to density.
+                        ;
+                        ; 0       -> 0
+                        ; 1..2    -> 1
+                        ; 3..4    -> 2
+                        ; ...
+                        ; 13..14  -> 7
+                        ; 15+     -> 7
+                        ; ------------------------------------------------------------
+
+204D  FE 0F                     CPI     15
+204F  DA 5720                   JC      DENSITY_LOW
+
+2052  3E 07                     MVI     A,7
+2054  C3 5B20                   JMP     DENSITY_INDEX
+
+2057                    DENSITY_LOW:
+2057  3C                        INR     A
+2058  0F                        RRC
+2059  E6 07                     ANI     0x07
+
+205B                    DENSITY_INDEX:
+205B  5F                        MOV     E,A
+205C  16 00                     MVI     D,0
+
+205E  21 F321                   LXI     H,DENSITY
+2061  19                        DAD     D
+
+2062  7E                		MOV 	A,M
+2063  CD 0610                   CALL    CO
+
+
+                        ; ------------------------------------------------------------
+                        ; CUR_X += STEP_X
+                        ; ------------------------------------------------------------
+
+2066  2A 0B30                   LHLD    CUR_X
+2069  EB                        XCHG
+206A  2A 0430                   LHLD    STEP_X
+206D  19                        DAD     D
+206E  22 0B30                   SHLD    CUR_X
+
+2071  3A 1C30                   LDA     COLS
+2074  3D                        DCR     A
+2075  32 1C30                   STA     COLS
+2078  C2 4A20                   JNZ     COLUMN_LOOP
+
+
+                        ; ------------------------------------------------------------
+                        ; Newline
+                        ; ------------------------------------------------------------
+
+
+207B  3E 0D             		MVI	A,0X0D
+207D  CD 0610                   CALL    CO
+
+2080  3E 0A             		MVI	A,0X0A
+2082  CD 0610                   CALL    CO
+
+
+                        ; ------------------------------------------------------------
+                        ; CUR_Y += STEP_Y
+                        ; ------------------------------------------------------------
+
+2085  2A 0D30                   LHLD    CUR_Y
+2088  EB                        XCHG
+2089  2A 0630                   LHLD    STEP_Y
+208C  19                        DAD     D
+208D  22 0D30                   SHLD    CUR_Y
+
+2090  3A 1D30                   LDA     ROWS
+2093  3D                        DCR     A
+2094  32 1D30                   STA     ROWS
+2097  C2 2820                   JNZ     ROW_LOOP
+
+209A  C9                        RET
+
+
+                        ; ============================================================
+                        ; MANDEL_POINT
+                        ;
+                        ; Calculate:
+                        ;
+                        ;       z = z*z + c
+                        ;
+                        ; starting with z = 0.
+                        ;
+                        ; Returns A = iteration count.
+                        ;
+                        ; A = ITER_MAX means the point survived.
+                        ; ============================================================
+
+209B                    MANDEL_POINT:
+
+209B  21 0000                   LXI     H,0
+209E  22 0F30                   SHLD    Z_X
+20A1  22 1130                   SHLD    Z_Y
+
+20A4  AF                        XRA     A
+20A5  32 1B30                   STA     ITER
+
+
+20A8                    ITERATE:
+
+                        ; ------------------------------------------------------------
+                        ; Preserve the old Z values.
+                        ; ------------------------------------------------------------
+
+20A8  2A 0F30                   LHLD    Z_X
+20AB  22 1330                   SHLD    OLD_X
+
+20AE  2A 1130                   LHLD    Z_Y
+20B1  22 1530                   SHLD    OLD_Y
+
+
+                        ; ------------------------------------------------------------
+                        ; If |X| >= 256, escape.
+                        ;
+                        ; Allowed values:
+                        ;       0000H..00FFH = 0..255
+                        ;       FF01H..FFFFH = -255..-1
+                        ;
+                        ; FF00H is -256 and must escape too.
+                        ; ------------------------------------------------------------
+
+20B4  2A 1330                   LHLD    OLD_X
+
+20B7  7C                        MOV     A,H
+20B8  FE 00                     CPI     0x00
+20BA  CA C720                   JZ      X_OK
+
+20BD  FE FF                     CPI     0xFF
+20BF  C2 4E21                   JNZ     ESCAPED
+
+20C2  7D                        MOV     A,L
+20C3  B7                        ORA     A
+20C4  CA 4E21                   JZ      ESCAPED
+
+20C7                    X_OK:
+
+
+                        ; ------------------------------------------------------------
+                        ; Same test for Y.
+                        ; ------------------------------------------------------------
+
+20C7  2A 1530                   LHLD    OLD_Y
+
+20CA  7C                        MOV     A,H
+20CB  FE 00                     CPI     0x00
+20CD  CA DA20                   JZ      Y_OK
+
+20D0  FE FF                     CPI     0xFF
+20D2  C2 4E21                   JNZ     ESCAPED
+
+20D5  7D                        MOV     A,L
+20D6  B7                        ORA     A
+20D7  CA 4E21                   JZ      ESCAPED
+
+20DA                    Y_OK:
+
+
+                        ; ------------------------------------------------------------
+                        ; X2 = OLD_X * OLD_X
+                        ; ------------------------------------------------------------
+
+20DA  2A 1330                   LHLD    OLD_X
+20DD  EB                        XCHG
+20DE  2A 1330                   LHLD    OLD_X
+
+20E1  CD 5221                   CALL    SMUL
+20E4  22 1730                   SHLD    X2
+
+
+                        ; ------------------------------------------------------------
+                        ; Y2 = OLD_Y * OLD_Y
+                        ; ------------------------------------------------------------
+
+20E7  2A 1530                   LHLD    OLD_Y
+20EA  EB                        XCHG
+20EB  2A 1530                   LHLD    OLD_Y
+
+20EE  CD 5221                   CALL    SMUL
+20F1  22 1930                   SHLD    Y2
+
+
+                        ; ------------------------------------------------------------
+                        ; Escape if X2 + Y2 >= 4.
+                        ;
+                        ; With 128 = 1.0:
+                        ;
+                        ;       4 * 128 * 128 = 65536
+                        ;
+                        ; Carry from the 16-bit addition means >= 4.
+                        ; ------------------------------------------------------------
+
+20F4  2A 1730                   LHLD    X2
+20F7  EB                        XCHG
+
+20F8  2A 1930                   LHLD    Y2
+20FB  19                        DAD     D
+
+20FC  DA 4E21                   JC      ESCAPED
+
+
+                        ; ------------------------------------------------------------
+                        ; Convert squares to fixed-point:
+                        ;
+                        ;       raw square / 128
+                        ; ------------------------------------------------------------
+
+20FF  2A 1730                   LHLD    X2
+2102  CD C521                   CALL    SHR7
+2105  22 1730                   SHLD    X2
+
+2108  2A 1930                   LHLD    Y2
+210B  CD C521                   CALL    SHR7
+210E  22 1930                   SHLD    Y2
+
+
+                        ; ============================================================
+                        ; New X:
+                        ;
+                        ;       X = X2 - Y2 + CUR_X
+                        ; ============================================================
+
+2111  2A 1930                   LHLD    Y2
+2114  EB                        XCHG
+
+2115  2A 1730                   LHLD    X2
+
+2118  7D                        MOV     A,L
+2119  93                        SUB     E
+211A  6F                        MOV     L,A
+
+211B  7C                        MOV     A,H
+211C  9A                        SBB     D
+211D  67                        MOV     H,A
+
+                        ; HL = X2 - Y2
+
+211E  EB                        XCHG
+
+211F  2A 0B30                   LHLD    CUR_X
+2122  19                        DAD     D
+
+2123  22 0F30                   SHLD    Z_X
+
+
+                        ; ============================================================
+                        ; New Y:
+                        ;
+                        ;       Y = 2 * OLD_X * OLD_Y + CUR_Y
+                        ;
+                        ; Raw product is shifted right 6:
+                        ;
+                        ;       (X * Y * 128 * 128) / 64
+                        ;       = X * Y * 256
+                        ;
+                        ; which represents 2*X*Y at scale 128.
+                        ; ============================================================
+
+2126  2A 1330                   LHLD    OLD_X
+2129  EB                        XCHG
+
+212A  2A 1530                   LHLD    OLD_Y
+
+212D  CD 5221                   CALL    SMUL
+
+2130  CD D321                   CALL    ASR6
+
+2133  EB                        XCHG
+
+2134  2A 0D30                   LHLD    CUR_Y
+2137  19                        DAD     D
+
+2138  22 1130                   SHLD    Z_Y
+
+
+                        ; ------------------------------------------------------------
+                        ; ITER++
+                        ; ------------------------------------------------------------
+
+213B  3A 1B30                   LDA     ITER
+213E  3C                        INR     A
+213F  32 1B30                   STA     ITER
+
+2142  47                        MOV     B,A
+
+2143  3A 0830                   LDA     ITER_MAX
+2146  B8                        CMP     B
+2147  C2 A820                   JNZ     ITERATE
+
+                        ; Survived all iterations.
+
+214A  3A 1B30                   LDA     ITER
+214D  C9                        RET
+
+
+214E                    ESCAPED:
+
+214E  3A 1B30                   LDA     ITER
+2151  C9                        RET
+
+
+                        ; ============================================================
+                        ; SMUL
+                        ;
+                        ; Signed 16-bit multiply.
+                        ;
+                        ; Input:
+                        ;       HL = signed value
+                        ;       DE = signed value
+                        ;
+                        ; The caller must ensure:
+                        ;       - Both operands are in -255..+255.
+                        ;       - The signed product fits in 16 bits.
+                        ;
+                        ; Output:
+                        ;       HL = signed product
+                        ; ============================================================
+
+2152                    SMUL:
+
+2152  22 1F30                   SHLD    MUL_A
+2155  EB                        XCHG
+2156  22 2130                   SHLD    MUL_B
+
+
+                        ; ------------------------------------------------------------
+                        ; Determine sign of result.
+                        ; ------------------------------------------------------------
+
+2159  AF                        XRA     A
+215A  32 1E30                   STA     SIGN
+
+215D  2A 1F30                   LHLD    MUL_A
+
+2160  7C                        MOV     A,H
+2161  E6 80                     ANI     0x80
+2163  CA 7121                   JZ      A_POSITIVE
+
+2166  3E 01                     MVI     A,1
+2168  32 1E30                   STA     SIGN
+
+216B  CD A021                   CALL    ABS_HL
+216E  22 1F30                   SHLD    MUL_A
+
+
+2171                    A_POSITIVE:
+
+2171  2A 2130                   LHLD    MUL_B
+
+2174  7C                        MOV     A,H
+2175  E6 80                     ANI     0x80
+2177  CA 8821                   JZ      B_POSITIVE
+
+217A  3A 1E30                   LDA     SIGN
+217D  EE 01                     XRI     1
+217F  32 1E30                   STA     SIGN
+
+2182  CD A021                   CALL    ABS_HL
+2185  22 2130                   SHLD    MUL_B
+
+
+2188                    B_POSITIVE:
+
+                        ; ------------------------------------------------------------
+                        ; Low bytes are now the unsigned operands.
+                        ; ------------------------------------------------------------
+
+2188  2A 1F30                   LHLD    MUL_A
+218B  45                        MOV     B,L
+
+218C  2A 2130                   LHLD    MUL_B
+218F  4D                        MOV     C,L
+
+2190  CD AC21                   CALL    MUL8
+
+
+                        ; ------------------------------------------------------------
+                        ; Apply sign.
+                        ; ------------------------------------------------------------
+
+2193  3A 1E30                   LDA     SIGN
+2196  B7                        ORA     A
+2197  C8                        RZ
+
+2198  7D                        MOV     A,L
+2199  2F                        CMA
+219A  6F                        MOV     L,A
+
+219B  7C                        MOV     A,H
+219C  2F                        CMA
+219D  67                        MOV     H,A
+
+219E  23                        INX     H
+
+219F  C9                        RET
+
+
+                        ; ============================================================
+                        ; ABS_HL
+                        ;
+                        ; Absolute value of signed 16-bit HL.
+                        ; ============================================================
+
+21A0                    ABS_HL:
+
+21A0  7C                        MOV     A,H
+21A1  E6 80                     ANI     0x80
+21A3  C8                        RZ
+
+21A4  7D                        MOV     A,L
+21A5  2F                        CMA
+21A6  6F                        MOV     L,A
+
+21A7  7C                        MOV     A,H
+21A8  2F                        CMA
+21A9  67                        MOV     H,A
+
+21AA  23                        INX     H
+
+21AB  C9                        RET
+
+
+                        ; ============================================================
+                        ; MUL8
+                        ;
+                        ; Unsigned 8 x 8 -> 16 bit.
+                        ;
+                        ; Input:
+                        ;       B = multiplicand
+                        ;       C = multiplier
+                        ;
+                        ; Output:
+                        ;       HL = product
+                        ; ============================================================
+
+21AC                    MUL8:
+
+21AC  21 0000                   LXI     H,0
+
+21AF  58                        MOV     E,B
+21B0  16 00                     MVI     D,0
+
+21B2  06 08                     MVI     B,8
+
+21B4                    MUL_LOOP:
+
+21B4  79                        MOV     A,C
+21B5  E6 01                     ANI     1
+21B7  CA BB21                   JZ      MUL_NO_ADD
+
+21BA  19                        DAD     D
+
+21BB                    MUL_NO_ADD:
+
+                        ; ------------------------------------------------------------
+                        ; DE <<= 1
+                        ;
+                        ; Clear carry before shifting E, then propagate E's high
+                        ; bit into D.
+                        ; ------------------------------------------------------------
+
+21BB  AF                        XRA     A
+
+21BC  18                        RDEL
+
+
+                        ; ------------------------------------------------------------
+                        ; Examine the next multiplier bit.
+                        ;
+                        ; RRC is intentional: over eight iterations, each original
+                        ; bit of C reaches bit 0 exactly once.
+                        ; ------------------------------------------------------------
+
+21BD  79                        MOV     A,C
+21BE  0F                        RRC
+21BF  4F                        MOV     C,A
+
+21C0  05                        DCR     B
+21C1  C2 B421                   JNZ     MUL_LOOP
+
+21C4  C9                        RET
+
+
+                        ; ============================================================
+                        ; SHR7
+                        ;
+                        ; Logical right shift HL by 7.
+                        ;
+                        ; Used only on positive squares.
+                        ; ============================================================
+
+21C5                    SHR7:
+
+21C5  06 07                     MVI     B,7
+
+21C7                    SHR7_LOOP:
+
+21C7  AF                        XRA     A
+
+21C8  7C                        MOV     A,H
+21C9  1F                        RAR
+21CA  67                        MOV     H,A
+
+21CB  7D                        MOV     A,L
+21CC  1F                        RAR
+21CD  6F                        MOV     L,A
+
+21CE  05                        DCR     B
+21CF  C2 C721                   JNZ     SHR7_LOOP
+
+21D2  C9                        RET
+
+
+                        ; ============================================================
+                        ; ASR6
+                        ;
+                        ; Arithmetic right shift signed HL by 6.
+                        ; ============================================================
+
+21D3                    ASR6:
+
+21D3  CD E621                   CALL    ASR1
+21D6  CD E621                   CALL    ASR1
+21D9  CD E621                   CALL    ASR1
+21DC  CD E621                   CALL    ASR1
+21DF  CD E621                   CALL    ASR1
+21E2  CD E621                   CALL    ASR1
+
+21E5  C9                        RET
+
+
+                        ; ============================================================
+                        ; ASR1
+                        ;
+                        ; Arithmetic right shift signed HL by one.
+                        ; ============================================================
+
+21E6                    ASR1:
+
+21E6  7C                        MOV     A,H
+21E7  E6 80                     ANI     0x80
+21E9  CA F021                   JZ      ASR_POS
+
+21EC  37                        STC
+21ED  C3 F121                   JMP     ASR_DO
+
+21F0                    ASR_POS:
+
+21F0  AF                        XRA     A
+
+21F1                    ASR_DO:
+
+21F1  10                		ARHL
+
+21F2  C9                        RET
+
+
+                        ; ============================================================
+                        ; ASCII density LUT
+                        ;
+                        ; 8 entries, from empty to dense.
+                        ; ============================================================
+
+21F3                    DENSITY:
+
+21F3  202E2D3D 2B2A2340         DB      ' .-=+*#@'
+
+
+                        ; ============================================================
+                        ; TEST ROUTINES
+                        ;
+                        ; These can be started using the monitor's G command.
+                        ;
+                        ; Results are stored at 3100H onwards.
+                        ; The parameter and working storage at 3000H-3022H are
+                        ; otherwise unchanged by the test wrappers, except that
+                        ; the point tests deliberately set CUR_X, CUR_Y and ITER_MAX.
+                        ; ============================================================
+
+2500                            ORG     0X2500
+
+
+                        ; ------------------------------------------------------------
+                        ; TEST_MUL8_SMALL
+                        ;
+                        ; 13 * 17 = 221 = 00DDH
+                        ;
+                        ; Result: 3100H-3101H = DD 00
+                        ; THIS TEST HANGS ON MY MACHINE. But it does write the correct result to memory.
+                        ; and all the other tests work! And yes I checked, 120A is C9 which is RET.
+                        ; ------------------------------------------------------------
+
+2500                    TEST_MUL8_SMALL:
+
+2500  06 0D                     MVI     B,13
+2502  0E 11                     MVI     C,17
+
+2504  CD AC21                   CALL    MUL8
+
+2507  22 0031                   SHLD    0x3100
+250A  C9                        RET
+
+
+                        ; ------------------------------------------------------------
+                        ; TEST_MUL8_LARGE
+                        ;
+                        ; 255 * 255 = 65025 = FE01H
+                        ;
+                        ; Result: 3102H-3103H = 01 FE
+                        ; ------------------------------------------------------------
+
+250B                    TEST_MUL8_LARGE:
+
+250B  06 FF                     MVI     B,255
+250D  0E FF                     MVI     C,255
+
+250F  CD AC21                   CALL    MUL8
+
+2512  22 0231                   SHLD    0x3102
+2515  C9                        RET
+
+
+                        ; ------------------------------------------------------------
+                        ; TEST_SMUL_NEGPOS
+                        ;
+                        ; -3 * 5 = -15 = FFF1H
+                        ;
+                        ; Result: 3104H-3105H = F1 FF
+                        ; ------------------------------------------------------------
+
+2516                    TEST_SMUL_NEGPOS:
+
+2516  21 FDFF                   LXI     H,0xFFFD
+2519  11 0500                   LXI     D,0x0005
+
+251C  CD 5221                   CALL    SMUL
+
+251F  22 0431                   SHLD    0x3104
+2522  C9                        RET
+
+
+                        ; ------------------------------------------------------------
+                        ; TEST_SMUL_NEGNEG
+                        ;
+                        ; -3 * -5 = 15 = 000FH
+                        ;
+                        ; Result: 3106H-3107H = 0F 00
+                        ; ------------------------------------------------------------
+
+2523                    TEST_SMUL_NEGNEG:
+
+2523  21 FDFF                   LXI     H,0xFFFD
+2526  11 FBFF                   LXI     D,0xFFFB
+
+2529  CD 5221                   CALL    SMUL
+
+252C  22 0631                   SHLD    0x3106
+252F  C9                        RET
+
+
+                        ; ------------------------------------------------------------
+                        ; TEST_SHR7
+                        ;
+                        ; 8000H >> 7 = 0100H
+                        ;
+                        ; Result: 3108H-3109H = 00 01
+                        ; ------------------------------------------------------------
+
+2530                    TEST_SHR7:
+
+2530  21 0080                   LXI     H,0x8000
+
+2533  CD C521                   CALL    SHR7
+
+2536  22 0831                   SHLD    0x3108
+2539  C9                        RET
+
+
+                        ; ------------------------------------------------------------
+                        ; TEST_ASR6
+                        ;
+                        ; -128 >> 6 = -2 = FFFEH
+                        ;
+                        ; Result: 310AH-310BH = FE FF
+                        ; ------------------------------------------------------------
+
+253A                    TEST_ASR6:
+
+253A  21 80FF                   LXI     H,0xFF80
+
+253D  CD D321                   CALL    ASR6
+
+2540  22 0A31                   SHLD    0x310A
+2543  C9                        RET
+
+
+                        ; ------------------------------------------------------------
+                        ; TEST_POINT_ZERO
+                        ;
+                        ; c = 0 + 0i
+                        ; Expected: 16 iterations
+                        ;
+                        ; Result: 310CH = 10
+                        ; ------------------------------------------------------------
+
+2544                    TEST_POINT_ZERO:
+
+2544  21 0000                   LXI     H,0
+2547  22 0B30                   SHLD    CUR_X
+254A  22 0D30                   SHLD    CUR_Y
+
+254D  3E 10                     MVI     A,16
+254F  32 0830                   STA     ITER_MAX
+
+2552  CD 9B20                   CALL    MANDEL_POINT
+
+2555  32 0C31                   STA     0x310C
+2558  C9                        RET
+
+
+                        ; ------------------------------------------------------------
+                        ; TEST_POINT_NEG1
+                        ;
+                        ; c = -1 + 0i
+                        ; Expected: 16 iterations
+                        ;
+                        ; Result: 310DH = 10
+                        ; ------------------------------------------------------------
+
+2559                    TEST_POINT_NEG1:
+
+2559  21 80FF                   LXI     H,0xFF80
+255C  22 0B30                   SHLD    CUR_X
+
+255F  21 0000                   LXI     H,0
+2562  22 0D30                   SHLD    CUR_Y
+
+2565  3E 10                     MVI     A,16
+2567  32 0830                   STA     ITER_MAX
+
+256A  CD 9B20                   CALL    MANDEL_POINT
+
+256D  32 0D31                   STA     0x310D
+2570  C9                        RET
+
+
+                        ; ------------------------------------------------------------
+                        ; TEST_POINT_POS1
+                        ;
+                        ; c = +1 + 0i
+                        ; Expected: 2 iterations
+                        ;
+                        ; Result: 310EH = 02
+                        ; ------------------------------------------------------------
+
+2571                    TEST_POINT_POS1:
+
+2571  21 8000                   LXI     H,0x0080
+2574  22 0B30                   SHLD    CUR_X
+
+2577  21 0000                   LXI     H,0
+257A  22 0D30                   SHLD    CUR_Y
+
+257D  3E 10                     MVI     A,16
+257F  32 0830                   STA     ITER_MAX
+
+2582  CD 9B20                   CALL    MANDEL_POINT
+
+2585  32 0E31                   STA     0x310E
+2588  C9                        RET
+
+
+                        ; ------------------------------------------------------------
+                        ; TEST_POINT_POS2
+                        ;
+                        ; c = +2 + 0i
+                        ; Expected: 1 iteration
+                        ;
+                        ; Result: 310FH = 01
+                        ; ------------------------------------------------------------
+
+2589                    TEST_POINT_POS2:
+
+2589  21 0001                   LXI     H,0x0100
+258C  22 0B30                   SHLD    CUR_X
+
+258F  21 0000                   LXI     H,0
+2592  22 0D30                   SHLD    CUR_Y
+
+2595  3E 10                     MVI     A,16
+2597  32 0830                   STA     ITER_MAX
+
+259A  CD 9B20                   CALL    MANDEL_POINT
+
+259D  32 0F31                   STA     0x310F
+25A0  C9                        RET
+
+
+                        ; ------------------------------------------------------------
+                        ; TEST_POINT_NEG2
+                        ;
+                        ; c = -2 + 0i
+                        ; Expected: 1 iteration
+                        ;
+                        ; Result: 3110H = 01
+                        ;
+                        ; Specifically tests the -256 component boundary.
+                        ; ------------------------------------------------------------
+
+25A1                    TEST_POINT_NEG2:
+
+25A1  21 00FF                   LXI     H,0xFF00
+25A4  22 0B30                   SHLD    CUR_X
+
+25A7  21 0000                   LXI     H,0
+25AA  22 0D30                   SHLD    CUR_Y
+
+25AD  3E 10                     MVI     A,16
+25AF  32 0830                   STA     ITER_MAX
+
+25B2  CD 9B20                   CALL    MANDEL_POINT
+
+25B5  32 1031                   STA     0x3110
+25B8  C9                        RET
+
+
+                        ; ============================================================
+                        ; DEFAULT PARAMETERS
+                        ;
+                        ; 128 = 1.0
+                        ;
+                        ; CENTER_X = -0.5
+                        ; CENTER_Y =  0
+                        ;
+                        ; STEP_X = 4/128 = 0.03125
+                        ; STEP_Y = 10/128 = 0.078125
+                        ;
+                        ; ITER_MAX = 16
+                        ; ============================================================
+
+3000                            ORG     0x3000
+
+3000  C0FF                      DW      0xFFC0          ; CENTER_X = -64
+3002  0000                      DW      0x0000          ; CENTER_Y = 0
+3004  0400                      DW      0x0004          ; STEP_X = 4
+3006  0A00                      DW      0x000A          ; STEP_Y = 10
+3008  10                        DB      16              ; ITER_MAX
+
+3009                            END
+
+00000 Total Error(s)
+
+ABS_HL             21A0    ASR1               21E6    ASR6               21D3
+ASR_DO             21F1    ASR_POS            21F0    A_POSITIVE         2171
+B_POSITIVE         2188    CENTER_X           3000 E  CENTER_Y           3002 E
+CO                 1006 E  COLS               301C E  COLUMN_LOOP        204A
+CUR_X              300B E  CUR_Y              300D E  DENSITY            21F3
+DENSITY_INDEX      205B    DENSITY_LOW        2057    ESCAPED            214E
+ITER               301B E  ITERATE            20A8    ITER_MAX           3008 E
+MANDEL_POINT       209B    MUL8               21AC    MUL_A              301F E
+MUL_B              3021 E  MUL_LOOP           21B4    MUL_NO_ADD         21BB
+OLD_X              3013 E  OLD_Y              3015 E  ROWS               301D E
+ROW_LOOP           2028    SHR7               21C5    SHR7_LOOP          21C7
+SIGN               301E E  SMUL               2152    START              2000
+STEP_X             3004 E  STEP_Y             3006 E  TEST_ASR6          253A
+TEST_MUL8_LARGE    250B    TEST_MUL8_SMALL    2500    TEST_POINT_NEG1    2559
+TEST_POINT_NEG2    25A1    TEST_POINT_POS1    2571    TEST_POINT_POS2    2589
+TEST_POINT_ZERO    2544    TEST_SHR7          2530    TEST_SMUL_NEGNEG   2523
+TEST_SMUL_NEGPOS   2516    TOP_Y              3009 E  TOP_Y_LOOP         2008
+X2                 3017 E  X_OK               20C7    X_START_LOOP       2030
+Y2                 3019 E  Y_OK               20DA    Z_X                300F E
+Z_Y                3011 E
