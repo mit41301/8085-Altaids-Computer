@@ -1,6 +1,6 @@
 # Mandelbrot Set
 
-https://en.wikipedia.org/wiki/Mandelbrot_set
+From Wikpedia [Mandelbrot Set](https://en.wikipedia.org/wiki/Mandelbrot_set)
 
 <img width="700" height="560" alt="image" src="https://github.com/user-attachments/assets/41af7f5d-e18a-496d-ae48-440054a7d419" />
 
@@ -25,7 +25,7 @@ The code worked well on my 8085 machine.
 
 ## BENCHMARK
 
-The 8080 kit with a system clock of 2.0480 MHz took 45.3 seconds to complete the Mandelbrot Set with inbuilt 8251 IC running at 4800 baud.
+The 8080 kit with a system clock of 2.0480 MHz took 45.80 seconds to complete the Mandelbrot Set with inbuilt 8251 IC running at 4800 baud.
 The 8085 kit with a system clock of 2.4576 MHz took 43.34 seconds to compete the Mandelbrot Set with soft serial using SID, SOD at 2400 baud.
 
 <img width="850" height="462" alt="TWITTER_CHATGPT" src="https://github.com/user-attachments/assets/d9123ee3-4996-49c8-bca4-852883039744" />
