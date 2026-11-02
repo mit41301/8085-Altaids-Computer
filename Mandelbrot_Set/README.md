@@ -6,4 +6,21 @@ https://en.wikipedia.org/wiki/Mandelbrot_set
 
 The first Mandelbrot set created by Robert W. Brooks and Peter Matelski in 1978.
 
+In any small microcontroller based system, plotting the Mandelbrot Set is one of the Acid Test due to large number of iterations.
 
+I am able to plot on a 8085 machine running at 4.9152 MHz with 2400 baud using tinyBASIC. Due to limited RAM, unable to run full fledged BASIC with floating point arithmetic. Below is the tinyBASIC output of plotting the Mandelbrot set.
+
+<img width="854" height="506" alt="TWITTER_TINYBASIC" src="https://github.com/user-attachments/assets/ca152dca-44c8-4b25-9000-edd664ece172" />
+
+I was looking for any other way to speed up my machine to perform faster. So I was looking simple or native machine language based approach.
+
+There is a Hackaday user **senily64dx** who recently built a 8080 kit. The surprise part is the kit was originally built on the yera **1976** and was never opened till **2026**. Below is the assembled 8080 kit picture for reference.
+
+<img width="3052" height="1700" alt="8080_SIEMENS" src="https://github.com/user-attachments/assets/18787cb0-44f3-41cd-8520-177133b6e79d" />
+
+If we notice the manufacturing date of the **8080** is **36th WEEK of 1976**!. This kit was opened after **50 Years** and assembled just few months back. For testing the kit **senily64dx** wrote a "Hello, World!" program in 8080 Assembly language. **senily64dx** also published the Mandelbrot set code he tried on his 8080 kit which was built in 1976.
+
+I do not have a 8080 system to try the Mandelbrot set code. Since I already have a working 80C85 system and 8085 is backward compatible with 8080 code, I want to give a try. 
+The code worked well on my 8085 machine.
+** BENCHMARK
+The 8080 kit with a system clock of 2.048 MHz took 45.3 seconds with inbuilt 8251 IC running at 4800 baud.
