@@ -34,3 +34,4 @@ After code optimization, the program runs at 40 seconds.
 
 **WARNING: The above code will RUN only on 8085, 80C85 CPU and will not run with 8080 processor. So the program is not backward compatible with 8080.**
 
+The list and HEX files are generated using **ASMX** 2.0 assembler.
