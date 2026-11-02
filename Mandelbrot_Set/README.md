@@ -12,9 +12,9 @@ I am able to plot on a 8085 machine running at 4.9152 MHz with 2400 baud using t
 
 <img width="854" height="506" alt="TWITTER_TINYBASIC" src="https://github.com/user-attachments/assets/ca152dca-44c8-4b25-9000-edd664ece172" />
 
-I was looking for any other way to speed up my machine to perform faster. So I was looking simple or native machine language based approach.
+I was looking for other ways to speed up my machine to perform faster. So I was looking simple or native machine language based approach.
 
-There is a Hackaday user **senily64dx** who recently built a 8080 kit. The surprise part is the kit was originally built on the yera **1976** and was never opened till **2026**. Below is the assembled 8080 kit picture for reference.
+There is a Hackaday user **senily64dx** who recently built a 8080 kit. The surprise part is the kit was originally built on the year **1976** and was never opened till **2026**. Below is the assembled 8080 kit picture for reference.
 
 <img width="3052" height="1700" alt="8080_SIEMENS" src="https://github.com/user-attachments/assets/18787cb0-44f3-41cd-8520-177133b6e79d" />
 
@@ -22,5 +22,15 @@ If we notice the manufacturing date of the **8080** is **36th WEEK of 1976**!. T
 
 I do not have a 8080 system to try the Mandelbrot set code. Since I already have a working 80C85 system and 8085 is backward compatible with 8080 code, I want to give a try. 
 The code worked well on my 8085 machine.
-** BENCHMARK
-The 8080 kit with a system clock of 2.048 MHz took 45.3 seconds with inbuilt 8251 IC running at 4800 baud.
+
+## BENCHMARK
+
+The 8080 kit with a system clock of 2.0480 MHz took 45.3 seconds to complete the Mandelbrot Set with inbuilt 8251 IC running at 4800 baud.
+The 8085 kit with a system clock of 2.4576 MHz took 43.34 seconds to compete the Mandelbrot Set with soft serial using SID, SOD at 2400 baud.
+
+<img width="850" height="462" alt="TWITTER_CHATGPT" src="https://github.com/user-attachments/assets/d9123ee3-4996-49c8-bca4-852883039744" />
+
+After code optimization, the program runs at 40 seconds.
+
+**WARNING: The above code will RUN only on 8085, 80C85 CPU and will not run with 8080 processor. So the program is not backward compatible with 8080.**
+
