@@ -14,11 +14,13 @@ I am able to plot on a 8085 machine running at 4.9152 MHz with 2400 baud using t
 
 I was looking for other ways to speed up my machine to perform faster. So I was looking simple or native machine language based approach.
 
-There is a Hackaday user **senily64dx** who recently built a 8080 kit. The surprise part is the kit was originally built on the year **1976** and was never opened till **2026**. Below is the assembled 8080 kit picture for reference.
+There is a Hackaday user [**senily64dx**](https://hackaday.io/SenileDataSystems)
+
+who recently built a 8080 kit. The surprise part is the kit was originally built on the year **1976** and was never opened till **2026**. Below is the assembled 8080 kit picture for reference.
 
 <img width="3052" height="1700" alt="8080_SIEMENS" src="https://github.com/user-attachments/assets/18787cb0-44f3-41cd-8520-177133b6e79d" />
 
-If we notice the manufacturing date of the **8080** is **36th WEEK of 1976**!. This kit was opened after **50 Years** and assembled just few months back. For testing the kit **senily64dx** wrote a "Hello, World!" program in 8080 Assembly language. **senily64dx** also published the Mandelbrot set code he tried on his 8080 kit which was built in 1976.
+If we notice the manufacturing date of the **8080** is **36th WEEK of 1976**!. This kit was opened after **50 Years** and assembled just few months back. For testing the kit **senily64dx** wrote a "Hello, World!" program in 8080 Assembly language. **senily64dx** also published the Mandelbrot set code he tried on his 8080 kit which was built in 1976. The original source code can be found [HERE](https://cdn.hackaday.io/files/2065438836735712/8080.asm)
 
 I do not have a 8080 system to try the Mandelbrot set code. Since I already have a working 80C85 system and 8085 is backward compatible with 8080 code, I want to give a try. 
 The code worked well on my 8085 machine.
