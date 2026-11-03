@@ -1,1 +1,0 @@
-ASMX20 -e -w -l AltaidsROM.LST -o AltaidsROM.HEX -C 8085 AltaidsROM.ASM
