@@ -1,5 +1,0 @@
-AGAIN       EQU   2006H
-DELAY       EQU   2022H
-LOOP_16     EQU   2025H
-START       EQU   2000H
-XOR8        EQU   2017H
