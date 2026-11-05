@@ -35,3 +35,7 @@ After code optimization, the program runs at 40 seconds.
 **WARNING: The above code will RUN only on 8085, 80C85 CPU and will not run with 8080 processor. So the program is not backward compatible with 8080.**
 
 The list and HEX files are generated using **ASMX** 2.0 assembler.
+
+## 8080 support
+
+The **Mandelbrot Set** using **8080/8085 assembly language** instructions for the **8080 processor** support added. The 8080.asm uses **A85** assembler for generating output HEX file. The 8080.hex file should run on both 8080 and 8085 processor. Not tested with 8080 machine. Tested with 8085 machine and works.
