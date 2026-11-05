@@ -1,7 +1,7 @@
 	TITLE "Mandelbrot generator (C) ChatGPT"
-       ORG     2000H
+        ORG     02000H
 
-CO      EQU     1006H
+CO      EQU     01006H
 
 ; ============================================================
 ; Mandelbrot for Intel 8080 / MCS-80 KIT
@@ -24,37 +24,37 @@ CO      EQU     1006H
 ; so the machine doesn't have to render the same image again and again at retrocomputing events
 ; ------------------------------------------------------------
 
-CENTER_X    EQU     3000H
-CENTER_Y    EQU     3002H
-STEP_X      EQU     3004H
-STEP_Y      EQU     3006H
-ITER_MAX    EQU     3008H
+CENTER_X    EQU     03000H
+CENTER_Y    EQU     03002H
+STEP_X      EQU     03004H
+STEP_Y      EQU     03006H
+ITER_MAX    EQU     03008H
 
 
 ; ------------------------------------------------------------
 ; Working storage
 ; ------------------------------------------------------------
 
-TOP_Y       EQU     3009H
-CUR_X       EQU     300BH
-CUR_Y       EQU     300DH
+TOP_Y       EQU     03009H
+CUR_X       EQU     0300BH
+CUR_Y       EQU     0300DH
 
-Z_X         EQU     300FH
-Z_Y         EQU     3011H
+Z_X         EQU     0300FH
+Z_Y         EQU     03011H
 
-OLD_X       EQU     3013H
-OLD_Y       EQU     3015H
+OLD_X       EQU     03013H
+OLD_Y       EQU     03015H
 
-X2          EQU     3017H
-Y2          EQU     3019H
+X2          EQU     03017H
+Y2          EQU     03019H
 
-ITER        EQU     301BH
-COLS        EQU     301CH
-ROWS        EQU     301DH
+ITER        EQU     0301BH
+COLS        EQU     0301CH
+ROWS        EQU     0301DH
 
-SIGN        EQU     301EH
-MUL_A       EQU     301FH
-MUL_B       EQU     3021H
+SIGN        EQU     0301EH
+MUL_A       EQU     0301FH
+MUL_B       EQU     03021H
 
 
 ; ============================================================
@@ -170,7 +170,7 @@ COLUMN_LOOP:
 DENSITY_LOW:
         INR     A
         RRC
-        ANI     07h
+        ANI     007H
 
 DENSITY_INDEX:
         MOV     E,A
@@ -203,10 +203,10 @@ DENSITY_INDEX:
 ; Newline
 ; ------------------------------------------------------------
 
-        MVI     A,0DH
+        MVI     A,00DH
         CALL    CO
 
-        MVI     A,0AH
+        MVI     A,00AH
         CALL    CO
 
 
@@ -278,7 +278,7 @@ ITERATE:
         LHLD    OLD_X
 
         MOV     A,H
-        CPI     00H
+        CPI     000H
         JZ      X_OK
 
         CPI     0FFH
@@ -298,7 +298,7 @@ X_OK:
         LHLD    OLD_Y
 
         MOV     A,H
-        CPI     00H
+        CPI     000H
         JZ      Y_OK
 
         CPI     0FFH
@@ -590,10 +590,10 @@ ABS_HL:
 
 MUL8:
 
-        LXI     H,0000H
+        LXI     H,0
 
         MOV     E,B
-        MVI     D,00
+        MVI     D,0
 
         MVI     B,8
 
@@ -744,7 +744,7 @@ DENSITY:
 ; the point tests deliberately set CUR_X, CUR_Y and ITER_MAX.
 ; ============================================================
 
-        ORG     2500H
+        ORG     02500H
 
 
 ; ------------------------------------------------------------
@@ -764,7 +764,7 @@ TEST_MUL8_SMALL:
 
         CALL    MUL8
 
-        SHLD    3100H
+        SHLD    03100H
         RET
 
 
@@ -783,7 +783,7 @@ TEST_MUL8_LARGE:
 
         CALL    MUL8
 
-        SHLD    3102H
+        SHLD    03102H
         RET
 
 
@@ -798,11 +798,11 @@ TEST_MUL8_LARGE:
 TEST_SMUL_NEGPOS:
 
         LXI     H,0FFFDH
-        LXI     D,0005H
+        LXI     D,00005H
 
         CALL    SMUL
 
-        SHLD    3104H
+        SHLD    03104H
         RET
 
 
@@ -821,7 +821,7 @@ TEST_SMUL_NEGNEG:
 
         CALL    SMUL
 
-        SHLD    3106H
+        SHLD    03106H
         RET
 
 
@@ -835,11 +835,11 @@ TEST_SMUL_NEGNEG:
 
 TEST_SHR7:
 
-        LXI     H,8000H
+        LXI     H,08000H
 
         CALL    SHR7
 
-        SHLD    3108H
+        SHLD    03108H
         RET
 
 
@@ -857,7 +857,7 @@ TEST_ASR6:
 
         CALL    ASR6
 
-        SHLD    310AH
+        SHLD    0310AH
         RET
 
 
@@ -872,7 +872,7 @@ TEST_ASR6:
 
 TEST_POINT_ZERO:
 
-        LXI     H,0000H
+        LXI     H,0
         SHLD    CUR_X
         SHLD    CUR_Y
 
@@ -881,7 +881,7 @@ TEST_POINT_ZERO:
 
         CALL    MANDEL_POINT
 
-        STA     310CH
+        STA     0310CH
         RET
 
 
@@ -899,7 +899,7 @@ TEST_POINT_NEG1:
         LXI     H,0FF80H
         SHLD    CUR_X
 
-        LXI     H,0000H
+        LXI     H,0
         SHLD    CUR_Y
 
         MVI     A,16
@@ -907,7 +907,7 @@ TEST_POINT_NEG1:
 
         CALL    MANDEL_POINT
 
-        STA     310DH
+        STA     0310DH
         RET
 
 
@@ -922,10 +922,10 @@ TEST_POINT_NEG1:
 
 TEST_POINT_POS1:
 
-        LXI     H,0080H
+        LXI     H,00080H
         SHLD    CUR_X
 
-        LXI     H,0000H
+        LXI     H,0
         SHLD    CUR_Y
 
         MVI     A,16
@@ -933,7 +933,7 @@ TEST_POINT_POS1:
 
         CALL    MANDEL_POINT
 
-        STA     310EH
+        STA     0310EH
         RET
 
 
@@ -948,10 +948,10 @@ TEST_POINT_POS1:
 
 TEST_POINT_POS2:
 
-        LXI     H,0100H
+        LXI     H,00100H
         SHLD    CUR_X
 
-        LXI     H,0000H
+        LXI     H,0
         SHLD    CUR_Y
 
         MVI     A,16
@@ -959,7 +959,7 @@ TEST_POINT_POS2:
 
         CALL    MANDEL_POINT
 
-        STA     310FH
+        STA     0310FH
         RET
 
 
@@ -979,7 +979,7 @@ TEST_POINT_NEG2:
         LXI     H,0FF00H
         SHLD    CUR_X
 
-        LXI     H,0000H
+        LXI     H,0
         SHLD    CUR_Y
 
         MVI     A,16
@@ -987,7 +987,7 @@ TEST_POINT_NEG2:
 
         CALL    MANDEL_POINT
 
-        STA     3110H
+        STA     03110H
         RET
 
 
@@ -1005,12 +1005,84 @@ TEST_POINT_NEG2:
 ; ITER_MAX = 16
 ; ============================================================
 
-        ORG     3000H
+        ORG     03000H
 
-        DW      0FFC0H          ; CENTER_X = -64
-        DW      0000H           ; CENTER_Y = 0
-        DW      0004H           ; STEP_X = 4
-        DW      000AH           ; STEP_Y = 10
+        DW      0FFC0H         ; CENTER_X = -64
+        DW      00000H          ; CENTER_Y = 0
+        DW      00004H          ; STEP_X = 4
+        DW      0000AH          ; STEP_Y = 10
         DB      16              ; ITER_MAX
 
         END
+
+If you have an MCS-80, you can just paste this into a terminal.
+
+I1000
+2A0230220930060B2A0930EB2A06307B$
+I1010
+955F7A9C57EB22093005C208102A0930$
+I1020
+220D303E17321D302A0030220B300628$
+I1030
+2A0B30EB2A04307B955F7A9C57EB220B$
+I1040
+3005C230103E4F321C30CD9B10FE0FDA$
+I1050
+57103E07C35B103C0FE6075F160021FD$
+I1060
+11194ECDFA032A0B30EB2A043019220B$
+I1070
+303A1C303D321C30C24A100E0DCDFA03$
+I1080
+0E0ACDFA032A0D30EB2A063019220D30$
+I1090
+3A1D303D321D30C22810C9210000220F$
+I10A0
+30221130AF321B302A0F302213302A11$
+I10B0
+302215302A13307CFE00CAC710FEFFC2$
+I10C0
+4E117DB7CA4E112A15307CFE00CADA10$
+I10D0
+FEFFC24E117DB7CA4E112A1330EB2A13$
+I10E0
+30CD52112217302A1530EB2A1530CD52$
+I10F0
+112219302A1730EB2A193019DA4E112A$
+I1100
+1730CDCA112217302A1930CDCA112219$
+I1110
+302A1930EB2A17307D936F7C9A67EB2A$
+I1120
+0B3019220F302A1330EB2A1530CD5211$
+I1130
+CDD811EB2A0D30192211303A1B303C32$
+I1140
+1B30473A0830B8C2A8103A1B30C93A1B$
+I1150
+30C9221F30EB222130AF321E302A1F30$
+I1160
+7CE680CA71113E01321E30CDA011221F$
+I1170
+302A21307CE680CA88113A1E30EE0132$
+I1180
+1E30CDA0112221302A1F30452A21304D$
+I1190
+CDAC113A1E30B7C87D2F6F7C2F6723C9$
+I11A0
+7CE680C87D2F6F7C2F6723C921000058$
+I11B0
+1600060879E601CABB1119AF7B175F7A$
+I11C0
+1757790F4F05C2B411C90607AF7C1F67$
+I11D0
+7D1F6F05C2CC11C9CDEB11CDEB11CDEB$
+I11E0
+11CDEB11CDEB11CDEB11C97CE680CAF5$
+I11F0
+1137C3F611AF7C1F677D1F6FC9202E2D$
+I1200
+3D2B2A2340$
+I3000
+C0FF000004000A0010$
+
