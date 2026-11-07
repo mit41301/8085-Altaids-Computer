@@ -86,8 +86,13 @@ Hardware Memory Map:
 	200 msec/line  
 
 # SOFTWARE
-The system comes with a inbuilt powerful MONITOR program which runs by default after RESET. 
-Monitor commands
+### MONITOR
+The operating system of the Altaids computer is a program known as a “monitor program.” This program allows for
+interacting with the computer over a serial port and debugging the programs. Commands consist of simple one or two
+letter command followed by hexadecimal values. Monitor programs were very popular with early computers. These
+programs allowed values to be written directly to memory, displaying memory, reading and writing Intel Hex files, etc.
+The monitor prompt is an asterisk **'*'**.  
+
 ```
 A : ALTAIR MONITOR
 B : TINY BASIC
@@ -102,13 +107,35 @@ R : DISPLAY REG
 T : TRACE (STEP) [Tnnnn]
 ```
 
-### A : ALTAIR MONITOR
-It is added just to show the legacy system. Here we need to enter all the numbers in OCTAL. The system output also will be in OCTAL number system.
-
-### B : TINY BASIC
-By typing **B** it invokes the tinyBASIC version 1.0. To exit we can type **BYE** or CTRL+X 
-
-
+### MONITOR COMMANDS
+**CMD: A**  
+Enter Altair Turnkey Monitor (see below)  
+**CMD: B**  
+Start Tiny BASIC 1.0  
+**CMD: Dssss eeee**  
+Dump memory from address ssss to eeee. After ssss is entered, a space will automatically be generated.  
+**CMD: Eaaaa**  
+Write to memory starting at address aaaa. The address will be printed with the current byte. Type a new byte (in
+hexadecimal) to change. Press <SPACE> to skip the address leaving it unchanged. Type any other character to exit.  
+**CMD: Gaaaa**  
+Go (execute) a program from address aaaa  
+**CMD: H**  
+Help / Display monitor commands  
+CMD: I
+Input a byte from port 60H and display  
+**CMD: L**  
+Load an Intel Hex file. Send the text file from the terminal emulator.  
+A '.' is printed for each record received correctly, a '?' if there is a checksum error, a '!' is printed when done  
+**CMD: Obb**  
+Output byte bb to port 61H  
+**CMD: R**  
+Display the values of the registers. Program Counter, Stack Pointer, Accumulator, Processor flags, BC,DE,HL. The flags  
+are: Sign, Zero, Auxiliary carry, Parity, and Carry. An example is below  
+PC :SP :A SZ_A_P_C:B C :D E :H L  
+11CB 3F9E 22 00000100 01D2 1082 11C8  
+**CMD: Taaaa**  
+Single Step (trace) instructions starting at address aaaa. Type any key to step. Type ^C to exit. Each step shows the
+registers and a disassembled instruction. See the example below for details.  
 
 # PRIME TESTs
 <img width="1217" height="671" alt="benchmark" src="https://github.com/user-attachments/assets/0ee04bcd-c2c7-481a-8975-0e04462866eb" />
