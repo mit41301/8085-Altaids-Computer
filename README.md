@@ -1,4 +1,9 @@
-# Intel 80C85 Altaids Computer
+# 80C85 Altaids Computer
+
+The Altaids Computer Kit is a small single board computer, same as the Raspberry Pi, BeagleBone Black, and Arduino. It uses parts that would have been used in the late 1970s/early 1980s (so, no surface-mount!). When connected to a monitor it has the ability for program development.
+
+The Altaids Computer shows that retro-computing doesn't need to take up a lot of space. If you want to relive the early days of computing with a small 8085 computer board, go out and build your own Altaids Computer.
+
 <img width="720" height="534" alt="_1976_8085_5x7_200dpi" src="https://github.com/user-attachments/assets/78c363f6-54df-400b-8b79-4c3a9c07e5a4" />
 
 Intel released the **8085 Microprocessor** in March **1976**. So by now it is more than 50 years. Like TIME MACHINE can be go back and build a 8085 computer? Even after fifty years we can still build a simple computer based on 8085. The study material available for 8085 is huge. We can find so many text books for 8085 with different level of approach. There are so many tutorial videos available in YouTube. Intel licensed the 8085 design to second source. So AMD, NEC, TOSHIBA, OKI, Siemens, etc., manufactured 8085. It is also available with CMOS technology which consumes very less power.
