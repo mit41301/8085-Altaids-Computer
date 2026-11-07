@@ -59,6 +59,31 @@ Since we need only 4 signals VCC, GND, Tx and Rx I came across CP2102 with just 
 CP210x USB to UART Bridge VCP Drivers can be found from Silabs web site 
 
 https://www.silabs.com/software-and-tools/usb-to-uart-bridge-vcp-drivers?tab=overview
+# MEMORY MAP
+Hardware Memory Map:  
+	0000H - 0EFFH	EPROM: TINY BASIC  
+	0F00H - 0FFFH	EPROM: ALTAIR TURNKEY MONITOR  
+	1000H - 1BFFH	EPROM: 8085 MONITOR  
+	1C00H - 1FFFH	EPROM: unused  
+	2000H - 3FFFH	SRAM  
+	4000H - 5FFFH	unavailable  
+	6000H - 7FFFH	RESERVED (decoded with I/O)  
+	8000H - FFFFH	OPEN  
+
+ I/O Map:  
+	00H - 5FH	unavailable  
+	60H - 7FH	external I/O port  
+	80H - FFH	unavailable  
+
+ Input Port:	60H  
+ Output Port:	61H  
+
+ Serial interface: 2400 baud, 8N1, Flow control: None  
+
+ Because of processing of the serial data, sending text files from TeraTerm  requires delays for character and lines.  I found the following settings  very reliable:
+ Transmit delay =  
+	50 msec/char  
+	200 msec/line  
 
 # SOFTWARE
 The system comes with a inbuilt powerful MONITOR program which runs by default after RESET. 
