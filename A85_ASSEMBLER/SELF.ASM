@@ -25,7 +25,7 @@ XOR8	LDA AGAIN	; load the current rotate instruction
 ; --- 16-bit Delay Routine ---
 ; Input: HL pair holds the 16-bit count (up to FFFFH)
 DELAY:
-    	LXI H, 0FFFFH   ; [10 T-states] Load HL with 65,535
+    	LXI H, -1       ; [10 T-states] Load HL with 65,535
 LOOP_16:
     	DCX H           ; [6 T-states] Decrement HL pair
     	MOV A, L        ; [4 T-states] Move Low byte to A
