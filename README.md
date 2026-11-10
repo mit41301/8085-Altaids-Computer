@@ -157,44 +157,44 @@ Sojourner's central processing unit (CPU) was an Intel 80C85 with a 2 MHz clock,
 
 # FAQ
 
-What is 8085?
+**What is 8085?**  
 The 8085 is an 8-bit microprocessor developed by Intel®, known for its simplicity and efficiency. It's a cornerstone in computing, providing a solid foundation for embedded systems and educational purposes. With a 16-bit address bus and a 74-instruction set, it efficiently manages basic computational tasks. You’ll find it largely used in teaching environments due to its straightforward architecture, making it a fantastic way to dive into the world of microprocessors.
 
-How does the 8085 handle data transfer?
+**How does the 8085 handle data transfer?**  
 The 8085 microprocessor handles data transfer using a combination of registers, buses, and memory. It features an address bus to specify memory locations and a data bus for moving data between the processor and peripherals. You’ll find it uses instructions like MOV to transfer data between registers or from memory to registers. The processor runs in a sequential manner to ensure data is accurately moved, making it a reliable tool for simple data management tasks in computing.
 
-Can I program an 8085 microprocessor easily?
+**Can I program an 8085 microprocessor easily?**  
 Programming the 8085 can be quite straightforward if you have a basic grasp of assembly language. The instruction set is limited to 74 instructions, making it relatively easy to learn and master. You’ll use mnemonics like LDA, STA, and MOV to perform operations. Numerous simulators are available online to practice without needing physical hardware, offering a practical way to hone your skills. Its simplicity and educational resources make it beginner-friendly, perfect for diving into microprocessor programming.
 
-What are the key registers in the 8085?
+**What are the key registers in the 8085?**  
 The 8085 microprocessor includes several key registers that are crucial for its operation. You’ll find the accumulator, which is used for arithmetic and logic operations. There are also six general-purpose registers – B, C, D, E, H, and L – which can be combined into pairs for 16-bit operations. The stack pointer and program counter are essential for managing memory and execution flow. Understanding these registers is vital for effectively programming the 8085 and using its full potential.
 
-How does the 8085 execute instructions?
+**How does the 8085 execute instructions?**  
 The 8085 executes instructions through a systematic fetch-decode-execute cycle. You’ll see the program counter fetch the next instruction from memory, which is then decoded to understand what operation is needed. The execution phase involves carrying out the operation, whether it’s arithmetic, logical, or data transfer. This cycle repeats each instruction in the program, ensuring smooth operation. Understanding this process is essential for grasping how microprocessors function at a fundamental level.
 
-Does the 8085 support interrupt handling?
+**Does the 8085 support interrupt handling?**  
 Yes, the 8085 supports interrupt handling with five interrupt lines. These interruptions allow external devices to pause the current execution flow to address urgent tasks. You’ll find instructions like RIM and SIM to manage interruptions effectively. The processor prioritizes these interruptions to ensure critical operations are handled promptly, enhancing the system’s responsiveness. Learning to manage interruptions is crucial for developing efficient and robust applications using the 8085 microprocessor.
 
-What are the communication capabilities of the 8085?
+**What are the communication capabilities of the 8085?**  
 The 8085 microprocessor offers basic communication capabilities through its system bus and I/O ports. You can work with it with external devices using the IN and OUT instructions, helping data exchange. It supports serial and parallel communication, allowing you to connect a variety of peripherals. This flexibility makes the 8085 a versatile choice for embedded systems where communication with other components is essential. Understanding these capabilities is key to maximizing the potential of your 8085-based projects.
 
-Can I use the 8085 for modern applications?
+**Can I use the 8085 for modern applications?**  
 While the 8085 is primarily educational and historical, it can still find use in some niche modern applications. You might consider it for simple embedded systems or hobbyist projects where its simplicity and low power consumption are helpful. However, for more advanced applications, modern processors with enhanced capabilities and power are recommended. The 8085 serves as a great learning tool or for specific low-resource tasks, offering a glimpse into the roots of computing.
 
-What kind of power supply does the 8085 require?
+**What kind of power supply does the 8085 require?**  
 The 8085 microprocessor requires a single +5V power supply for operation. Its low power consumption makes it suitable for battery-operated devices. You’ll find this characteristic helpful in designing energy-efficient systems. Despite being designed in the 1970s, its power requirements stay modest by today’s standards, making it an attractive choice for educational purposes and small-scale projects. Understanding its power requirements is essential for creating stable and reliable systems.
 
-How do I meet memory with the 8085?
+**How do I meet memory with the 8085?**  
 Interfacing memory with the 8085 involves using its 16-bit address bus to specify memory locations and an 8-bit data bus to transfer data. You can connect RAM and ROM to meet your storage needs. You’ll need to manage control signals like RD (read) and WR (write) to execute memory operations. The process requires a clear understanding of addressing modes and timing, but once mastered, it’s straightforward to expand the capabilities of your 8085 system.
 
-Would learning the 8085 help with understanding modern processors?
+**Would learning the 8085 help with understanding modern processors?**  
 Absolutely, learning the 8085 microprocessor sets a strong foundation for understanding modern processors. You’ll gain insights into basic processor architecture, instruction sets, and data handling. Although modern processors are more complex, the fundamental concepts stay the same. By mastering the 8085, you develop critical thinking and problem-solving skills applicable to any microprocessor study. It’s a stepping stone into the broader world of computing technology, offering valuable lessons and a historical perspective.
 
-How do I debug programs on the 8085?
+**How do I debug programs on the 8085?**  
 Debugging programs on the 8085 involves using an assembler or simulator to test your code. You can step through instructions and check register values to find problems. It’s essential to check for logical errors, incorrect instruction usage, or improper data handling. You’ll often rely on tools that emulate 8085 operations, giving you a safe environment to troubleshoot. Developing debugging skills is crucial for ensuring your programs run smoothly and efficiently on the 8085 microprocessors.
 
-Does the 8085 support advanced programming languages?
+**Does the 8085 support advanced programming languages?**  
 The 8085 primarily supports assembly language programming, which is closer to machine code and provides direct control over the hardware. While it doesn’t natively support high-level languages, you can use cross-compilers to write code in languages like C, which is then converted to assembly. This process is less efficient than programming directly in assembly but offers a more familiar syntax if you prefer high-level languages. Understanding this limitation is vital for planning your 8085 projects effectively.
 
-Can I simulate 8085 programs on modern computers?
+**Can I simulate 8085 programs on modern computers?**  
 Yes, you can simulate 8085 programs on modern computers using various emulators and simulators available online. These tools allow you to write, test, and debug your code in a virtual environment without needing physical hardware. You will receive help from features like step execution, register monitoring, and memory tracking, making it easier to understand how your programs run. Simulators are an excellent resource for learning and practicing 8085 programming in a convenient and accessible way.
