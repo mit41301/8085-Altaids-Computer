@@ -12,7 +12,7 @@ I am able to plot on a 8085 machine running at 4.9152 MHz with 2400 baud using t
 
 <img width="854" height="506" alt="TWITTER_TINYBASIC" src="https://github.com/user-attachments/assets/ca152dca-44c8-4b25-9000-edd664ece172" />
 
-Another tiny BASIC program with slightly different logic produced the following output
+Another [tiny BASIC](https://rosettacode.org/wiki/Mandelbrot_set#Tiny_BASIC) program with slightly different logic produced the following output
 
 <img width="853" height="581" alt="II_Mandelbrot" src="https://github.com/user-attachments/assets/6434c957-f93a-444e-ba0f-4b5c0a63be88" />
 
