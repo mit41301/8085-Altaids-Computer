@@ -36,7 +36,7 @@ The 8085 kit with a system clock of 2.4576 MHz took 43.34 seconds to compete the
 
 After code optimization, the program runs at 40 seconds.
 
-**WARNING: The above code will RUN only on 8085, 80C85 CPU and will not run with 8080 processor. So the program is not backward compatible with 8080.**
+**WARNING: The 8080.asm code will RUN on both 8080 and 8085. 8085.asm will run only with 8085 and not backward compatible with 8080.**
 
 The list and HEX files are generated using **ASMX** 2.0 assembler.
 
