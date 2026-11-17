@@ -1,4 +1,0 @@
-DEMO        EQU   2000H
-VAR1        EQU   2030H
-VAR2        EQU   2031H
-VAR3        EQU   2032H
