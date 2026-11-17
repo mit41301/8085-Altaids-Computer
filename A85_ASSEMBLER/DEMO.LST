@@ -1,26 +1,0 @@
-                        ; DEMO.ASM
-                        ;
-                        ; ALTAIDS computer demo
-                        ; based on Altair demo from Popular Electronics, Feb 1975
-                        ;
-                        ; COMMAND TO ASSEMBLE: 
-                        ;	a85 demo.asm -l demo.prn -o demo.hex
-                        ; 
-                        ;
-   2000                 	ORG	2000H
-   2000   3a 30 20      DEMO:	LDA	VAR1
-   2003   47            	MOV	B,A
-   2004   3a 31 20      	LDA	VAR2
-   2007   80            	ADD	B
-   2008   27            	DAA
-   2009   32 32 20      	STA	VAR3
-   200c   c3 00 20      	JMP	DEMO
-                        ;	
-   2030                 	ORG	2030H
-   2030   07            VAR1:	DB	07H
-   2031   08            VAR2:	DB	08H
-   2032   00            VAR3:	DB	0
-                        
-   2033                 	END
-2000  DEMO          2030  VAR1          2031  VAR2          2032  VAR3      
-
