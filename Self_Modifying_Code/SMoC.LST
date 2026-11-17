@@ -1,0 +1,43 @@
+                        
+                        	TITLE "Self-modifying code for MCS-85"
+                        ;	a85 SMoC.ASM -l SMoC.LST -o SMoC.HEX -s SMoC.SYM
+                        
+   2000                 	ORG 2000H 	; RAM starts HERE
+                        
+   2000   21 00 40      START:   LXI H, 4000h 	; load HL pair with top of RAM
+   2003   f9            	SPHL		; init Stack Pointer using HL pair	
+                        
+   2004   af            INIT:	XRA A		; clear ACCumulator
+   2005   37            	STC		; set CARRY Flag to 1
+                        
+   2006   17            AGAIN:	RAL		; rotate RAL or RAR
+   2007   f5            	PUSH PSW	; store the ACC content in stack
+   2008   cd 1f 20      	CALL DELAY	; time delay to see
+   200b   f1            	POP PSW		; restore the ACC content back
+   200c   d3 61         	OUT 61H		; send it to output port 61H
+   200e   dc 14 20      	CC XOR8		; Call if CARRY FLAG = 1
+   2011   c3 06 20      	JMP AGAIN	; do the Rotate again
+                        
+   2014   3a 06 20      XOR8:	LDA AGAIN	; load the current rotate instruction	
+   2017   ee 08         	XRI 08H		; this will CHANGE the INSTRUCTION (direction)
+   2019   32 06 20      	STA AGAIN	; store the modified instruction	
+   201c   af            	XRA A		; clear ACCumulator
+   201d   37            	STC		; set CARRY Flag to 1
+   201e   c9            	RET		; return 
+                        
+                        ; --- 16-bit Delay Routine ---
+                        ; Input: HL pair holds the 16-bit count (up to FFFFH)
+   201f                 DELAY:
+   201f   21 ff ff          	LXI H, -1       ; [10 T-states] Load HL with 65,535
+   2022                 LOOP_16:
+   2022   2b                	DCX H           ; [6 T-states] Decrement HL pair
+   2023   7d                	MOV A, L        ; [4 T-states] Move Low byte to A
+   2024   b4                	ORA H           ; [4 T-states] OR with High byte (Sets Zero flag)
+   2025   c2 22 20          	JNZ LOOP_16     ; [10/7 T-states] Jump if result not zero
+   2028   c9                	RET             ; [10 T-states]
+   2000                 	END START	; Added for A85
+Self-modifying code for MCS-85
+
+2006  AGAIN         201f  DELAY         2004  INIT          2022  LOOP_16   
+2000  START         2014  XOR8          
+
