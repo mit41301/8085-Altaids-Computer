@@ -12,7 +12,7 @@ Intel released the **8085 Microprocessor** in March **1976**. So by now it is mo
 
 8085 was over shadowed by Z80 and other eight bit microprocessors. But it found a place in College and University. That may be one of the reason it lasted for long time. Since it is a microprocessor and not a microcontroller, it is very simple in hardware and very easy to understand.  
 
-<img width="1008" height="756" alt="8085" src="https://github.com/user-attachments/assets/980e69d4-e566-49af-bb66-6c4e3638d243" />
+<img width="1488" height="992" alt="8085" src="https://github.com/user-attachments/assets/9819b06c-a2d7-46a3-9c20-b4805497a527" />
 
 # PRACTIAL is better than THEORY
 To understand what is a computer, and how it operates, we can study and learn or do it and learn. What is a CPU, ROM, RAM, CLOCK etc., we can realize more easily with practical learning.
