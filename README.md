@@ -198,3 +198,5 @@ The 8085 primarily supports assembly language programming, which is closer to ma
 
 **Can I simulate 8085 programs on modern computers?**  
 Yes, you can simulate 8085 programs on modern computers using various emulators and simulators available online. These tools allow you to write, test, and debug your code in a virtual environment without needing physical hardware. You will receive help from features like step execution, register monitoring, and memory tracking, making it easier to understand how your programs run. Simulators are an excellent resource for learning and practicing 8085 programming in a convenient and accessible way.
+
+[Simple 8085 Computer](https://youtu.be/ChzMnLZCkDs?si=ensmGGm-5lE2eDGw)
