@@ -1,4 +1,4 @@
-# 80C85 Altaids Computer
+# 8085 Altaids Computer
 
 The Altaids Computer Kit is a small single board computer, same as the Raspberry Pi, BeagleBone Black, and Arduino. It uses parts that would have been used in the late 1970s/early 1980s (so, no surface-mount!). When connected to a monitor it has the ability for program development.
 
