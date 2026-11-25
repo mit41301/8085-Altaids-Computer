@@ -4,19 +4,12 @@ The Altaids Computer Kit is a small single board computer, same as the Raspberry
 
 The Altaids Computer shows that retro-computing doesn't need to take up a lot of space. If you want to relive the early days of computing with a small 8085 computer board, go out and build your own Altaids Computer.
 
-<img width="720" height="534" alt="_1976_8085_5x7_200dpi" src="https://github.com/user-attachments/assets/78c363f6-54df-400b-8b79-4c3a9c07e5a4" />
-
-Intel released the **8085 Microprocessor** in March **1976**. So by now it is more than 50 years. Like TIME MACHINE can be go back and build a 8085 computer? Even after fifty years we can still build a simple computer based on 8085. The study material available for 8085 is huge. We can find so many text books for 8085 with different level of approach. There are so many tutorial videos available in YouTube. Intel licensed the 8085 design to second source. So AMD, NEC, TOSHIBA, OKI, Siemens, etc., manufactured 8085. It is also available with CMOS technology which consumes very less power.
 ### BLOCK DIAGRAM
 <img width="1203" height="903" alt="BLOCK" src="https://github.com/user-attachments/assets/6e4d23a8-b179-49e3-a15e-907bb16f94b8" />
 
 8085 was over shadowed by Z80 and other eight bit microprocessors. But it found a place in College and University. That may be one of the reason it lasted for long time. Since it is a microprocessor and not a microcontroller, it is very simple in hardware and very easy to understand.  
 
 <img width="1488" height="992" alt="8085" src="https://github.com/user-attachments/assets/9819b06c-a2d7-46a3-9c20-b4805497a527" />
-
-# PRACTIAL is better than THEORY
-To understand what is a computer, and how it operates, we can study and learn or do it and learn. What is a CPU, ROM, RAM, CLOCK etc., we can realize more easily with practical learning.
-For example we can see STEP by STEP how the computer operates in real time. How the computer performs Arithmetic operation, Logical operations and how the computer takes decision all we can see in real time using hardware. We can enter few instruction and see how the computer behaves. So the learning is quick and we will remember the thing for long time.
 
 # Configuration:
 
