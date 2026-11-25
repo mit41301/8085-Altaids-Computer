@@ -33,6 +33,8 @@ Since the Intel HEX file format is a standard one, we can use any compatible ass
 # ASMX cross-assembler 2.0
 There are few minor syntax differences between A85 and ASMX assembler. One advantage of ASMX over A85 is there is a CPU type declaration. If we specify CPU 8085, the assembler works for normal instrction set. If we declare the processor type as **CPU 8085U**, then the assembler supports the extended instructions of 8085. The intel HEX file generated have some difference. While downloading the HEX file into the target, the system will not come back to Monitor prompt. We need to press **CTRL+X** to come out and return back to the monitor.
 
+https://www.retrotechnology.com/memship/asmx.zip  
+
 # Tera Term
 We need a serial terminal to connect our computer to a Desktop or Laptop at 2400 baud. The Tera Term app is chosen due to easy file transfer capability and support for XMODEM protocol which is useful while working with tinyBASIC.  
 Tera Term is a free, open‑source terminal emulator for Windows that supports SSH, Telnet, and serial connections. We can find the latest release from Github at
