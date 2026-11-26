@@ -154,7 +154,7 @@ Sojourner's central processing unit (CPU) was an Intel 80C85 with a 2 MHz clock,
 
 [Mandelbrot Tiny BASIC](https://youtu.be/cH2A4bGWgNU?si=kowJ4ytAgeMtHxjw)
 
-[TIL311}(https://youtu.be/OKS3wBvelnk?si=2Yiqj46luRlH0zTh)
+[TIL311](https://youtu.be/OKS3wBvelnk?si=2Yiqj46luRlH0zTh)
 
 [Sefl-Modifying Code](https://youtu.be/20GMQfqPw_g?si=QRQFw95PmzgmOhkJ)
 
