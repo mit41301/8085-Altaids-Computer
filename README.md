@@ -35,6 +35,8 @@ There are few minor syntax differences between A85 and ASMX assembler. One advan
 
 https://www.retrotechnology.com/memship/asmx.zip  
 
+ASMX20 -l -o -w -e -C 8085 SOURCE.ASM
+
 # Tera Term
 We need a serial terminal to connect our computer to a Desktop or Laptop at 2400 baud. The Tera Term app is chosen due to easy file transfer capability and support for XMODEM protocol which is useful while working with tinyBASIC.  
 Tera Term is a free, open‑source terminal emulator for Windows that supports SSH, Telnet, and serial connections. We can find the latest release from Github at
