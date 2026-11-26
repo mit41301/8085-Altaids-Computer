@@ -136,19 +136,20 @@ PC :SP :A SZ_A_P_C:B C :D E :H L
 Single Step (trace) instructions starting at address aaaa. Type any key to step. Type ^C to exit. Each step shows the
 registers and a disassembled instruction. See the example below for details.  
 
-8085 computer hardware overview
+## Short Videos  
+8085 computer hardware overview  
 [Simple 8085 Computer](https://youtu.be/ChzMnLZCkDs?si=ensmGGm-5lE2eDGw)
 
-Mandelbrot Set running on 8085 computer using Tiny BASIC
+Mandelbrot Set running on 8085 computer using Tiny BASIC  
 [Mandelbrot Tiny BASIC](https://youtu.be/cH2A4bGWgNU?si=kowJ4ytAgeMtHxjw)
 
-TIL311 interface to 8085 computer at output port 0x61
+TIL311 interface to 8085 computer at output port 0x61  
 [TIL311](https://youtu.be/OKS3wBvelnk?si=2Yiqj46luRlH0zTh)
 
-Self-Modifying Code using **RAL** and **RAR** instruction
+Self-Modifying Code using **RAL** and **RAR** instruction  
 [Sefl-Modifying Code](https://youtu.be/20GMQfqPw_g?si=QRQFw95PmzgmOhkJ)
 
-Mandelbrot Set using 8085 Assembly Language instruction using Extended Instruction Set
+Mandelbrot Set using 8085 Assembly Language instruction using Extended Instruction Set  
 [Mandelbrot 8085 Assembly](https://youtu.be/y5n6lMc3bmc?si=x9U8BrK-iZQ8gBJ5)
 
 ### MARS 
