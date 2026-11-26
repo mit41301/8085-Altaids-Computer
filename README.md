@@ -136,7 +136,22 @@ PC :SP :A SZ_A_P_C:B C :D E :H L
 Single Step (trace) instructions starting at address aaaa. Type any key to step. Type ^C to exit. Each step shows the
 registers and a disassembled instruction. See the example below for details.  
 
-# MARS 
+8085 computer hardware overview
+[Simple 8085 Computer](https://youtu.be/ChzMnLZCkDs?si=ensmGGm-5lE2eDGw)
+
+Mandelbrot Set running on 8085 computer using Tiny BASIC
+[Mandelbrot Tiny BASIC](https://youtu.be/cH2A4bGWgNU?si=kowJ4ytAgeMtHxjw)
+
+TIL311 interface to 8085 computer at output port 0x61
+[TIL311](https://youtu.be/OKS3wBvelnk?si=2Yiqj46luRlH0zTh)
+
+Self-Modifying Code using **RAL** and **RAR** instruction
+[Sefl-Modifying Code](https://youtu.be/20GMQfqPw_g?si=QRQFw95PmzgmOhkJ)
+
+Mandelbrot Set using 8085 Assembly Language instruction using Extended Instruction Set
+[Mandelbrot 8085 Assembly](https://youtu.be/y5n6lMc3bmc?si=x9U8BrK-iZQ8gBJ5)
+
+### MARS 
 <img width="800" height="417" alt="image" src="https://github.com/user-attachments/assets/c334782d-0dd8-4e28-be4f-c4c3b7435c52" />
 
 Dec. 4, 1996
@@ -149,16 +164,3 @@ The mission landed a rover -- Sojourner -- on the surface of Mars using an air b
 The Sojourner rover was a vehicle that reached Mars on July 4, 1997 as part of the Mars Pathfinder mission. Sojourner was operational on Mars for 92 sols (95 Earth days), and was the first wheeled vehicle to operate on an astronomical object other than the Earth or Moon. The landing site was in the Ares Vallis channel in the Chryse Planitia region of the Oxia Palus quadrangle.
 
 Sojourner's central processing unit (CPU) was an Intel 80C85 with a 2 MHz clock, addressing 64 kilobytes (Kb) of memory, and running a cyclic executive. 
-
-[Simple 8085 Computer](https://youtu.be/ChzMnLZCkDs?si=ensmGGm-5lE2eDGw)
-
-[Mandelbrot Tiny BASIC](https://youtu.be/cH2A4bGWgNU?si=kowJ4ytAgeMtHxjw)
-
-[TIL311](https://youtu.be/OKS3wBvelnk?si=2Yiqj46luRlH0zTh)
-
-[Sefl-Modifying Code](https://youtu.be/20GMQfqPw_g?si=QRQFw95PmzgmOhkJ)
-
-[Mandelbrot 8085 Assembly](https://youtu.be/y5n6lMc3bmc?si=x9U8BrK-iZQ8gBJ5)
-
-
-
