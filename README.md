@@ -70,18 +70,17 @@ Hardware Memory Map:
 	8000H - FFFFH	OPEN  
 
  I/O Map:  
-	00H - 5FH	unavailable  
+ 
 	60H - 7FH	external I/O port  
-	80H - FFH	unavailable  
 
  Input Port:	60H  
  Output Port:	61H  
 
  Serial interface: 2400 baud, 8N1, Flow control: None  
 
- Because of processing of the serial data, sending text files from TeraTerm  requires delays for character and lines.  I found the following settings  very reliable:
+ Because of processing of the serial data, sending text files from TeraTerm  requires delays for character and lines.  The following settings works very reliable:
  Transmit delay =  
-	50 msec/char  
+	20 msec/char  
 	200 msec/line  
 
 # SOFTWARE
